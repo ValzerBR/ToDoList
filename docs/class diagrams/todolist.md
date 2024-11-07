@@ -36,5 +36,5 @@ classDiagram
     }
 
     Tarefa "1" --> "*" Categoria : eh_categorizada_por
-    Usuario "1" --> "*" Categoria : cria
+    Usuario "1" --> "*" Tarefa : cria
     

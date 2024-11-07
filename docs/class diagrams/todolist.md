@@ -8,11 +8,20 @@ classDiagram
         +int Id
         +string Titulo
         +string Descricao
-        +string Status
+        +Status Status
         +Date DataDeCriacao
         +Date? DataDeEncerramento
         +Date DataDeVencimento
         +int UsuarioId
+    }
+
+    class Status {
+        <<enumeration>>
+        +Pendente
+        +EmAndamento
+        +Concluida
+        +Cancelada
+        +Vencida
     }
 
     class Usuario {

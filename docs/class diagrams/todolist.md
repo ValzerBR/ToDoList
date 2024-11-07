@@ -12,7 +12,7 @@ classDiagram
         +Date DataDeCriacao
         +Date? DataDeEncerramento
         +Date DataDeVencimento
-        +int UserId
+        +int UsuarioId
     }
 
     class Usuario {

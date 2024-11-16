@@ -1,6 +1,6 @@
 ﻿namespace ToDo.Contracts
 {
-    public interface IUsuario
+    public interface ITarefa
     {
     }
 }

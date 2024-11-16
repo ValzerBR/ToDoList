@@ -22,5 +22,7 @@ namespace ToDo.Models
         public int UsuarioId { get; set; }
         [ForeignKey("UsuarioId")]
         public Usuario Usuario { get; set; }
+
+        public ICollection<Categoria> Categorias { get; set; }
     }
 }

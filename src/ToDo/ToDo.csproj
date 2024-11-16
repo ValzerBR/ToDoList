@@ -14,12 +14,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
     <Folder Include="Exceptions\" />
     <Folder Include="GenericRepository\" />
     <Folder Include="Util\" />
     <Folder Include="Repository\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

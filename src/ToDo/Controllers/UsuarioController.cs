@@ -16,13 +16,13 @@ namespace ToDo.Controllers
         }
 
         [HttpPost("/Create/")]
-        public IActionResult Create(Usuario usuario)
+        public IActionResult Create([FromBody] UsuarioDC usuario)
         {
             return JsonOptionsUtil.Create(_usuarioContract.Create(usuario));
         }
 
         [HttpPut("/Update/")]
-        public IActionResult Update(Usuario usuario)
+        public IActionResult Update(UsuarioDC usuario)
         {
             return JsonOptionsUtil.Create(_usuarioContract.Update(usuario));
         }
@@ -33,8 +33,8 @@ namespace ToDo.Controllers
             return JsonOptionsUtil.Create(_usuarioContract.Detail(id));
         }
 
-        [HttpDelete("/Delete/{ids}")]
-        public IActionResult Delete(int[] ids)
+        [HttpDelete("/Delete/")]
+        public IActionResult Delete([FromQuery] int[] ids)
         {
             _usuarioContract.Delete(ids);
             return Json(null);

@@ -7,7 +7,7 @@ namespace ToDo.Context
 {
     public class Context : DbContext
     {
-        public Context(DbContextOptions<Context> options)
+        public Context (DbContextOptions<Context> options)
             : base(options) { }
 
         public DbSet<Categoria> Categorias => Set<Categoria>();

@@ -5,7 +5,7 @@ using System.Text.Json;
 namespace ToDo.Util
 {
     /// <summary>
-    /// Classe criada para auxiliar o retorno do JSON devido à referência cíclica da classe Endereço na classe Pessoa.
+    /// Classe criada para auxiliar o retorno do JSON devido à referência cíclica da classe;
     /// </summary>
     public static class Controller
     {

@@ -1,5 +1,9 @@
 
+using Microsoft.EntityFrameworkCore;
+using ToDo.Context;
 using ToDo.Contracts;
+using ToDo.GenericRepository;
+using ToDo.Repository;
 using ToDo.Services;
 
 namespace ToDo
@@ -14,9 +18,17 @@ namespace ToDo
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<Context.Context>(opt => opt.UseInMemoryDatabase("ToDoList"));
+
             builder.Services.AddScoped<ICategoria, CategoriaService>();
             builder.Services.AddScoped<ITarefa, TarefaService>();
             builder.Services.AddScoped<IUsuario, UsuarioService>();
+
+
+            builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            builder.Services.AddScoped<UsuarioRepository>();
+
+
 
             var app = builder.Build();
 

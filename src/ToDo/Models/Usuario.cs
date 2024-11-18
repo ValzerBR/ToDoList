@@ -6,12 +6,12 @@ namespace ToDo.Models
     {
         [Required]
         [Key]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         [Required]
-        public string Nome { get; set; }
+        public virtual string Nome { get; set; }
         [Required]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
-        public ICollection<Tarefa> Tarefas { get; set; }
+        public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

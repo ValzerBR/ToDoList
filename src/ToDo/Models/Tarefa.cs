@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Components.Web.Virtualization;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ToDo.Models
@@ -7,22 +8,22 @@ namespace ToDo.Models
     {
         [Key]
         [Required]
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
         [Required]
-        public string Titulo { get; set; }
-        public string Descricao { get; set; }
+        public virtual string Titulo { get; set; }
+        public virtual string Descricao { get; set; }
         [Required]
-        public Status Status { get; set; }
+        public virtual Status Status { get; set; }
         [Required]
-        public DateTime DataDeCriacao { get; set; }
-        public DateTime? DataDeEncerramento { get; set; }
+        public virtual DateTime DataDeCriacao { get; set; }
+        public virtual DateTime? DataDeEncerramento { get; set; }
         [Required]
-        public DateTime DataDeVencimento { get; set; }
+        public virtual DateTime DataDeVencimento { get; set; }
         [Required]
-        public int UsuarioId { get; set; }
+        public virtual int UsuarioId { get; set; }
         [ForeignKey("UsuarioId")]
-        public Usuario Usuario { get; set; }
+        public virtual Usuario Usuario { get; set; }
 
-        public ICollection<Categoria> Categorias { get; set; }
+        public virtual ICollection<Categoria> Categorias { get; set; }
     }
 }

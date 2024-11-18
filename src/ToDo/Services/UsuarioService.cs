@@ -56,7 +56,7 @@ namespace ToDo.Services
 
         public IEnumerable<Usuario> Search()
         {
-            return _usuarioRepository.GetAll();
+            return _usuarioRepository.GetAll().ToList();
         }
 
         

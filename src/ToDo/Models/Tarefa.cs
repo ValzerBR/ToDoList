@@ -24,6 +24,6 @@ namespace ToDo.Models
         [ForeignKey("UsuarioId")]
         public virtual Usuario Usuario { get; set; }
 
-        public virtual ICollection<Categoria> Categorias { get; set; }
+        public virtual ICollection<Categoria>? Categorias { get; set; }
     }
 }

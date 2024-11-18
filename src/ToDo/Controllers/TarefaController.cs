@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDo.Contracts;
 using static ToDo.Util.Controller;
-using ToDo.Models;
 
 namespace ToDo.Controllers
 {
@@ -15,35 +14,35 @@ namespace ToDo.Controllers
             _tarefaContract = tarefaContract;
         }
 
-        [HttpPost("/Create/")]
-        public IActionResult Create(Tarefa tarefa)
+        [HttpPost("/Create/Tarefa/")]
+        public IActionResult Create([FromBody] TarefaDC tarefa)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Create(tarefa));
         }
 
-        [HttpPut("/Update/")]
-        public IActionResult Update(Tarefa tarefa)
+        [HttpPut("/Update/Tarefa/")]
+        public IActionResult Update(TarefaDC tarefa)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Update(tarefa));
         }
 
-        [HttpGet("/Detail/{id}")]
+        [HttpGet("/Detail/Tarefa/{id}")]
         public IActionResult Detail(int id)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Detail(id));
         }
 
-        [HttpDelete("/Delete/{ids}")]
-        public IActionResult Delete(int[] ids)
+        [HttpDelete("/Delete/Tarefa/")]
+        public IActionResult Delete([FromQuery] int[] ids)
         {
             _tarefaContract.Delete(ids);
             return Json(null);
         }
 
-        [HttpGet("/Search/")]
+        [HttpGet("/Search/Tarefa/")]
         public IActionResult Search()
         {
-            return JsonOptionsUtil.Create(_tarefaContract.Search());
+            return JsonOptionsUtil.Create(_tarefaContract.Search().ToList());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using ToDo.Contracts;
+using ToDo.Exceptions;
 using ToDo.Models;
 using ToDo.Repository;
 using ToDo.Util;
@@ -9,11 +10,11 @@ namespace ToDo.Services
     public class TarefaService : ITarefa
     {
         private readonly TarefaRepository _tarefaRepository;
-        private readonly Context.Context _context;
-        public TarefaService(TarefaRepository tarefaRepository, Context.Context ctx)
+        private readonly CategoriaRepository _categoriaRepository;
+        public TarefaService(TarefaRepository tarefaRepository, CategoriaRepository categoriaRepository)
         {
             _tarefaRepository = tarefaRepository;
-            _context = ctx;
+            _categoriaRepository = categoriaRepository;
         }
 
         private TarefaResponseDC? FormataTarefa(Tarefa obj)
@@ -41,23 +42,15 @@ namespace ToDo.Services
         public TarefaResponseDC Create(TarefaDC tarefa)
         {
             var categoriasParaAssociar = new List<Categoria>();
-
-            foreach (CategoriaDC categoria in tarefa.Categorias)
+            
+            foreach (var idCategoria in tarefa.CategoriasId)
             {
-                var categoriaExistente = _context.Categorias.FirstOrDefault(c => c.Id == categoria.Id);
+                var categoriaExistente = _categoriaRepository.GetAll().FirstOrDefault(c => c.Id == idCategoria);
 
-                if (categoriaExistente != null)
-                    categoriasParaAssociar.Add(categoriaExistente);
-                else
-                {
-                    var novaCategoria = new Categoria
-                    {
-                        Nome = categoria.Nome
-                    };
-
-                    _context.Categorias.Add(novaCategoria);
-                    categoriasParaAssociar.Add(novaCategoria);
-                }
+                if (categoriaExistente.IsNull())
+                    throw new BusinessException("Categoria não existe.");
+                    
+                categoriasParaAssociar.Add(categoriaExistente);
             }
 
             var tarefaParaSalvar = new Tarefa
@@ -91,14 +84,15 @@ namespace ToDo.Services
             tarefaEntity.Titulo = tarefa.Titulo;
             tarefaEntity.UsuarioId = tarefa.UsuarioId;
 
-            // Se Categorias forem passadas, atualiza as categorias
-            if (tarefa.Categorias != null)
+            if (!tarefa.CategoriasId.IsNull())
             {
-                tarefaEntity.Categorias = tarefa.Categorias.Select(c => new Categoria
+                foreach (var idCategoria in tarefa.CategoriasId)
                 {
-                    Id = c.Id,
-                    Nome = c.Nome
-                }).ToList();
+                    var categoria = _categoriaRepository.GetById(idCategoria);
+                    if (categoria.IsNull())
+                        throw new BusinessException("Categoria não encontrada.");
+                    tarefaEntity.Categorias.Add(categoria);
+                }
             }
 
             _tarefaRepository.Save(tarefaEntity);

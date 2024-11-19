@@ -9,6 +9,7 @@ namespace ToDo.Contracts
         void Delete(int[] ids);
         void DeleteCategoriaFromTarefa(int tarefaId, int idCategoria);
         CategoriaDC Create(CategoriaDC categoria);
+        CategoriaDC Update(CategoriaDC categoria);
     }
 
     [DataContract]

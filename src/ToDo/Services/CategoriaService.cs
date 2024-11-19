@@ -69,5 +69,14 @@ namespace ToDo.Services
             });
             return categoria;
         }
+
+        public CategoriaDC Update(CategoriaDC categoria)
+        {
+            var categoriaEntity = _categoriaRepository.GetById(categoria.Id);
+            categoriaEntity.Nome = categoria.Nome;
+            _categoriaRepository.Save(categoriaEntity);
+            
+            return categoria;
+        }
     }
 }

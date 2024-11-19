@@ -56,5 +56,18 @@ namespace ToDo.Services
 
             _categoriaRepository.Delete(categoria);
         }
+
+        public CategoriaDC Create(CategoriaDC categoria)
+        {
+            if (!_categoriaRepository.GetById(categoria.Id).IsNull())
+                throw new BusinessException("Categoria já existe.");
+                
+            _categoriaRepository.Save(new Categoria
+            {
+                Nome = categoria.Nome,
+                Id = categoria.Id
+            });
+            return categoria;
+        }
     }
 }

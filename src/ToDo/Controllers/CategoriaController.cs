@@ -35,6 +35,13 @@ namespace ToDo.Controllers
             _categoriaContract.DeleteCategoriaFromTarefa(tarefaId, categoriaId);
             return Json(null);
         }
+        
+        [HttpPost("Create/Categoria/")]
+        public IActionResult Create(CategoriaDC categoria)
+        {
+            _categoriaContract.Create(categoria);
+            return Json(null);
+        }
 
     }
 }

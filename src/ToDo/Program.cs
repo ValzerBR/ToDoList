@@ -27,6 +27,7 @@ namespace ToDo
             builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             builder.Services.AddScoped<UsuarioRepository>();
             builder.Services.AddScoped<TarefaRepository>();
+            builder.Services.AddScoped<CategoriaRepository>();
 
             var app = builder.Build();
 

@@ -34,7 +34,7 @@ namespace ToDo.Contracts
         [DataMember]
         public int UsuarioId { get; set; }
         [DataMember]
-        public ICollection<CategoriaDC>? Categorias { get; set; }
+        public ICollection<int>? CategoriasId { get; set; }
     }
 
     [DataContract]

@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ToDo.Contracts;
+using ToDo.Models;
+using ToDo.Util;
 using static ToDo.Util.Controller;
 
 namespace ToDo.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class TarefaController : Controller
+    public class TarefaController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly ITarefa _tarefaContract;
         public TarefaController(ITarefa tarefaContract)
         {
             _tarefaContract = tarefaContract;
         }
+
 
         [HttpPost("/Create/Tarefa/")]
         public IActionResult Create([FromBody] TarefaDC tarefa)

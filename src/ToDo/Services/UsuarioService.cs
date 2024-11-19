@@ -13,17 +13,46 @@ namespace ToDo.Services
         {
             _usuarioRepository = usuarioRepository;
         }
-
-        public Usuario Create(UsuarioDC usuario)
+        private UsuarioResponseDC? FormataUsuario(Usuario? obj)
         {
-            return _usuarioRepository.Save(new Usuario
+            if (obj.IsNull())
+                return null;
+
+            return new UsuarioResponseDC
+            {
+                Nome = obj.Nome,
+                Email = obj.Email,
+                Tarefas = !obj.Tarefas.IsNull() ? obj.Tarefas.Select(t => new TarefaResponseDC
+                {
+                    DataDeEncerramento = t.DataDeEncerramento.ToDateBR(),
+                    DataDeVencimento = t.DataDeVencimento.ToDateBR(),
+                    DataDeCriacao = t.DataDeCriacao.ToDateBR(),
+                    Descricao = t.Descricao,
+                    Titulo = t.Titulo,
+                    StatusFormatado = t.Status.GetEnumName(),
+                    UsuarioId = t.UsuarioId,
+                    Categorias = t.Categorias.Select(w => new CategoriaDC
+                    {
+                        Id = w.Id,
+                        Nome = w.Nome
+                    }).ToList()
+
+                }).ToList() : null
+            };
+        }
+
+        public UsuarioResponseDC Create(UsuarioDC usuario)
+        {
+            var user = _usuarioRepository.Save(new Usuario
             {
                 Nome = usuario.Nome,
                 Email = usuario.Email
             });
+
+            return FormataUsuario(user);
         }
 
-        public Usuario Update(UsuarioDC usuario)
+        public UsuarioResponseDC Update(UsuarioDC usuario)
         {
             //Como eu posso melhorar esse método para que eu não precise ficar settando as propriedades do meu usuário toda vez que eu chamar um Update?
 
@@ -35,30 +64,29 @@ namespace ToDo.Services
             usuarioExistente.Nome = usuario.Nome;
             usuarioExistente.Email = usuario.Email;
 
-            return _usuarioRepository.Save(usuarioExistente);
+            var user = _usuarioRepository.Save(usuarioExistente);
+            return FormataUsuario(user);
         }
 
         public void Delete(int[] ids)
         {
-            foreach(int idUsuario in ids)
+            foreach (int idUsuario in ids)
             {
                 Usuario usuario = _usuarioRepository.GetById(idUsuario);
-                if(!usuario.IsNull())
+                if (!usuario.IsNull())
                     _usuarioRepository.Delete(usuario);
             }
         }
 
-        public Usuario Detail(int id)
+        public UsuarioResponseDC Detail(int id)
         {
             Usuario usuario = _usuarioRepository.GetById(id);
-            return usuario;
+            return FormataUsuario(usuario);
         }
 
-        public IEnumerable<Usuario> Search()
+        public IEnumerable<UsuarioResponseDC> Search()
         {
-            return _usuarioRepository.GetAll().ToList();
+            return _usuarioRepository.GetAll().Select(u => FormataUsuario(u)).ToList();
         }
-
-        
     }
 }

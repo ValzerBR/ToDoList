@@ -1,4 +1,5 @@
-﻿using ToDo.Contracts;
+﻿using System.Data;
+using ToDo.Contracts;
 using ToDo.Models;
 using ToDo.Repository;
 using ToDo.Util;
@@ -8,33 +9,75 @@ namespace ToDo.Services
     public class TarefaService : ITarefa
     {
         private readonly TarefaRepository _tarefaRepository;
-        public TarefaService(TarefaRepository tarefaRepository)
+        private readonly Context.Context _context;
+        public TarefaService(TarefaRepository tarefaRepository, Context.Context ctx)
         {
             _tarefaRepository = tarefaRepository;
+            _context = ctx;
         }
 
-        public Tarefa Create(TarefaDC tarefa)
+        private TarefaResponseDC? FormataTarefa(Tarefa obj)
         {
-            //Resolver o problema de não conseguir criar uma tarefa com uma categoria que já exista no sistema.
+            if (obj.IsNull())
+                return null;
 
-            return _tarefaRepository.Save(new Tarefa
+            return new TarefaResponseDC
+            {
+                DataDeEncerramento = obj.DataDeEncerramento.ToDateBR(),
+                DataDeVencimento = obj.DataDeVencimento.ToDateBR(),
+                DataDeCriacao = obj.DataDeCriacao.ToDateBR(),
+                Descricao = obj.Descricao,
+                Titulo = obj.Titulo,
+                StatusFormatado = obj.Status.GetEnumName(),
+                UsuarioId = obj.UsuarioId,
+                Categorias = obj.Categorias.Select(w => new CategoriaDC
+                {
+                    Id = w.Id,
+                    Nome = w.Nome
+                }).ToList()
+            };
+        }
+
+        public TarefaResponseDC Create(TarefaDC tarefa)
+        {
+            var categoriasParaAssociar = new List<Categoria>();
+
+            foreach (CategoriaDC categoria in tarefa.Categorias)
+            {
+                var categoriaExistente = _context.Categorias.FirstOrDefault(c => c.Id == categoria.Id);
+
+                if (categoriaExistente != null)
+                    categoriasParaAssociar.Add(categoriaExistente);
+                else
+                {
+                    var novaCategoria = new Categoria
+                    {
+                        Nome = categoria.Nome
+                    };
+
+                    _context.Categorias.Add(novaCategoria);
+                    categoriasParaAssociar.Add(novaCategoria);
+                }
+            }
+
+            var tarefaParaSalvar = new Tarefa
             {
                 Id = tarefa.Id,
-                DataDeCriacao = tarefa.DataDeCriacao,
+                DataDeCriacao = DateTime.Now,
                 DataDeEncerramento = tarefa.DataDeEncerramento,
                 DataDeVencimento = tarefa.DataDeVencimento,
                 Descricao = tarefa.Descricao,
                 Status = tarefa.Status,
                 Titulo = tarefa.Titulo,
                 UsuarioId = tarefa.UsuarioId,
-                Categorias = tarefa.Categorias?.Select(tarefa => new Categoria
-                {
-                    Id = tarefa.Id == 0 ? 0 : tarefa.Id,
-                    Nome = tarefa.Nome
-                }).ToList()
-            });
+                Categorias = categoriasParaAssociar
+            };
+
+            _tarefaRepository.Save(tarefaParaSalvar);
+            return FormataTarefa(tarefaParaSalvar);
         }
-        public Tarefa Update(TarefaDC tarefa)
+
+        public TarefaResponseDC Update(TarefaDC tarefa)
         {
             var tarefaEntity = _tarefaRepository.GetById(tarefa.Id);
 
@@ -58,7 +101,8 @@ namespace ToDo.Services
                 }).ToList();
             }
 
-            return _tarefaRepository.Save(tarefaEntity);
+            _tarefaRepository.Save(tarefaEntity);
+            return FormataTarefa(tarefaEntity);
         }
 
         public void Delete(int[] ids)
@@ -71,14 +115,14 @@ namespace ToDo.Services
             }
         }
 
-        public Tarefa Detail(int id)
+        public TarefaResponseDC Detail(int id)
         {
-            return _tarefaRepository.GetById(id);
+            return FormataTarefa(_tarefaRepository.GetById(id));
         }
 
-        public IEnumerable<Tarefa> Search()
+        public IEnumerable<TarefaResponseDC> Search()
         {
-            return _tarefaRepository.GetAll().ToList();
+            return _tarefaRepository.GetAll().Select(w => FormataTarefa(w)).ToList();
         }
     }
 }

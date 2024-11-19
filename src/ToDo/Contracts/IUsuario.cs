@@ -5,11 +5,11 @@ namespace ToDo.Contracts
 {
     public interface IUsuario
     {
-        Usuario Create(UsuarioDC usuario);
-        Usuario Update(UsuarioDC usuario);
-        Usuario Detail(int id);
+        UsuarioResponseDC Create(UsuarioDC usuario);
+        UsuarioResponseDC Update(UsuarioDC usuario);
+        UsuarioResponseDC Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<Usuario> Search();
+        IEnumerable<UsuarioResponseDC> Search();
     }
 
     [DataContract]
@@ -21,5 +21,19 @@ namespace ToDo.Contracts
         public string Nome { get; set; }
         [DataMember]
         public string Email { get; set; }
+    }
+
+    [DataContract]
+    public class UsuarioResponseDC
+    {
+        [DataMember]
+        public string Nome { get; set; }
+
+        [DataMember]
+        public string Email { get; set; }
+
+        [DataMember]
+        public ICollection<TarefaResponseDC>? Tarefas { get; set; }
+
     }
 }

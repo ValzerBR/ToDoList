@@ -5,11 +5,9 @@ namespace ToDo.Contracts
 {
     public interface ICategoria
     {
-        Categoria Create(Categoria categoria);
-        Categoria Update(Categoria categoria);
-        Categoria Detail(int id);
+        CategoriaDC? Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<Categoria> Search();
+        void DeleteCategoriaFromTarefa(int tarefaId, int idCategoria);
     }
 
     [DataContract]

@@ -2,16 +2,18 @@
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization;
 using ToDo.Models;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace ToDo.Contracts
 {
     public interface ITarefa
     {
-        Tarefa Create(TarefaDC usuario);
-        Tarefa Update(TarefaDC usuario);
-        Tarefa Detail(int id);
+        TarefaResponseDC Create(TarefaDC usuario);
+        TarefaResponseDC Update(TarefaDC usuario);
+        TarefaResponseDC Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<Tarefa> Search();
+        IEnumerable<TarefaResponseDC> Search();
     }
 
     [DataContract]
@@ -26,8 +28,6 @@ namespace ToDo.Contracts
         [DataMember]
         public Status Status { get; set; }
         [DataMember]
-        public DateTime DataDeCriacao { get; set; }
-        [DataMember]
         public DateTime? DataDeEncerramento { get; set; }
         [DataMember]
         public DateTime DataDeVencimento { get; set; }
@@ -35,5 +35,30 @@ namespace ToDo.Contracts
         public int UsuarioId { get; set; }
         [DataMember]
         public ICollection<CategoriaDC>? Categorias { get; set; }
+    }
+
+    [DataContract]
+    public class TarefaResponseDC
+    {
+        public string Titulo { get; set; }
+        [DataMember]
+        public string Descricao { get; set; }
+        [DataMember]
+        public string DataDeEncerramento { get; set; }
+        [DataMember]
+        public string DataDeVencimento { get; set; }
+        [DataMember]
+        public int UsuarioId { get; set; }
+        [DataMember]
+        public ICollection<CategoriaDC>? Categorias { get; set; }
+        [DataMember]
+        public string StatusFormatado { get; set; }
+        [DataMember]
+        public string DataDeCriacao { get; set; }
+
+        private string? GetStatusFormatado(Status status)
+        {
+            return Enum.GetName(typeof(Status), status);
+        }
     }
 }

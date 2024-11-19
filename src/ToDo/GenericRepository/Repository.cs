@@ -5,7 +5,7 @@ namespace ToDo.GenericRepository
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly DbContext _ctx;
-        private DbSet<T> _dbSet;
+        protected DbSet<T> _dbSet;
 
         public Repository(DbContext ctx)
         {
@@ -13,7 +13,7 @@ namespace ToDo.GenericRepository
             _dbSet = _ctx.Set<T>();
         }
 
-        public T Save(T entity)
+        public virtual T Save(T entity)
         {
             if (_ctx.Entry(entity).State == EntityState.Detached)
                 _dbSet.Add(entity);
@@ -24,18 +24,18 @@ namespace ToDo.GenericRepository
             return entity;
         }
 
-        public void Delete(T entity)
+        public virtual void Delete(T entity)
         {
             _dbSet.Remove(entity);
             _ctx.SaveChanges();
         }
 
-        public IQueryable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return _dbSet.AsNoTracking();
+            return _dbSet;
         }
 
-        public T? GetById(int id)
+        public virtual T? GetById(int id)
         {
             return _dbSet.Find(id);
         }

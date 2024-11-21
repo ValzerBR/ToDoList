@@ -20,6 +20,7 @@ namespace ToDo.Services
 
             return new UsuarioResponseDC
             {
+                Id = obj.Id,
                 Nome = obj.Nome,
                 Email = obj.Email,
                 Tarefas = !obj.Tarefas.IsNull() ? obj.Tarefas.Select(t => new TarefaResponseDC
@@ -57,7 +58,6 @@ namespace ToDo.Services
             //Como eu posso melhorar esse método para que eu não precise ficar settando as propriedades do meu usuário toda vez que eu chamar um Update?
 
             var usuarioExistente = _usuarioRepository.GetById(usuario.Id);
-
             if (usuarioExistente.IsNull())
                 throw new BusinessException("Usuário não existe.");
 

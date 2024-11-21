@@ -59,6 +59,8 @@ namespace ToDo.Contracts
     [DataContract]
     public class TarefaResponseDC
     {
+        [DataMember]
+        public int Id { get; set; }
         public string Titulo { get; set; }
         [DataMember]
         public string Descricao { get; set; }

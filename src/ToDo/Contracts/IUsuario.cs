@@ -36,6 +36,8 @@ namespace ToDo.Contracts
     public class UsuarioResponseDC
     {
         [DataMember]
+        public int Id { get; set; }
+        [DataMember]
         public string Nome { get; set; }
 
         [DataMember]

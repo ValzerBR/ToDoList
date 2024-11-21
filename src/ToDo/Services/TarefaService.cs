@@ -11,11 +11,13 @@ namespace ToDo.Services
     {
         private readonly TarefaRepository _tarefaRepository;
         private readonly CategoriaRepository _categoriaRepository;
-        
-        public TarefaService(TarefaRepository tarefaRepository, CategoriaRepository categoriaRepository)
+        private readonly UsuarioRepository _usuarioRepository;
+
+        public TarefaService(TarefaRepository tarefaRepository, CategoriaRepository categoriaRepository, UsuarioRepository usuarioRepository)
         {
             _tarefaRepository = tarefaRepository;
             _categoriaRepository = categoriaRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
         private TarefaResponseDC? FormataTarefa(Tarefa obj)
@@ -25,6 +27,7 @@ namespace ToDo.Services
 
             return new TarefaResponseDC
             {
+                Id = obj.Id,
                 DataDeEncerramento = obj.DataDeEncerramento.ToDateBR(),
                 DataDeVencimento = obj.DataDeVencimento.ToDateBR(),
                 DataDeCriacao = obj.DataDeCriacao.ToDateBR(),
@@ -44,14 +47,15 @@ namespace ToDo.Services
         {
             var categoriasParaAssociar = new List<Categoria>();
 
-
+            if (_usuarioRepository.GetById(tarefa.UsuarioId).IsNull())
+                throw new BusinessException("Usuário inválido. Por favor crie e/ou insira um usuário válido.");
 
             foreach (int idCategoria in tarefa.CategoriasId ?? Enumerable.Empty<int>())
             {
                 var categoriaExistente = _categoriaRepository.GetAll().FirstOrDefault(c => c.Id == idCategoria);
 
                 if (categoriaExistente.IsNull())
-                    throw new BusinessException("Categoria não existe.");
+                    throw new BusinessException("A categoria não existe. Insire ou crie uma categoria válida.");
                     
                 categoriasParaAssociar.Add(categoriaExistente);
             }

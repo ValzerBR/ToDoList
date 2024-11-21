@@ -23,7 +23,8 @@ namespace ToDo.Services
 
             return new CategoriaDC
             {
-                Nome = obj.Nome
+                Nome = obj.Nome,
+                Id = obj.Id
             };
         }
 
@@ -57,17 +58,21 @@ namespace ToDo.Services
             _categoriaRepository.Delete(categoria);
         }
 
-        public CategoriaDC Create(CategoriaDC categoria)
+        public CategoriaDC Create(CategoriaNovaDC categoria)
         {
-            if (!_categoriaRepository.GetById(categoria.Id).IsNull())
+            if (_categoriaRepository.GetAll().Any(w => w.Nome == categoria.Nome))
                 throw new BusinessException("Categoria já existe.");
-                
-            _categoriaRepository.Save(new Categoria
+
+            Categoria novaCategoria = _categoriaRepository.Save(new Categoria
             {
                 Nome = categoria.Nome,
-                Id = categoria.Id
             });
-            return categoria;
+
+            return new CategoriaDC
+            {
+                Id = novaCategoria.Id,
+                Nome = novaCategoria.Nome
+            };
         }
 
         public CategoriaDC Update(CategoriaDC categoria)
@@ -75,7 +80,7 @@ namespace ToDo.Services
             var categoriaEntity = _categoriaRepository.GetById(categoria.Id);
             categoriaEntity.Nome = categoria.Nome;
             _categoriaRepository.Save(categoriaEntity);
-            
+
             return categoria;
         }
     }

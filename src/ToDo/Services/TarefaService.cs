@@ -11,6 +11,7 @@ namespace ToDo.Services
     {
         private readonly TarefaRepository _tarefaRepository;
         private readonly CategoriaRepository _categoriaRepository;
+        
         public TarefaService(TarefaRepository tarefaRepository, CategoriaRepository categoriaRepository)
         {
             _tarefaRepository = tarefaRepository;
@@ -39,11 +40,13 @@ namespace ToDo.Services
             };
         }
 
-        public TarefaResponseDC Create(TarefaDC tarefa)
+        public TarefaResponseDC Create(TarefaNovaDC tarefa)
         {
             var categoriasParaAssociar = new List<Categoria>();
-            
-            foreach (var idCategoria in tarefa.CategoriasId)
+
+
+
+            foreach (int idCategoria in tarefa.CategoriasId ?? Enumerable.Empty<int>())
             {
                 var categoriaExistente = _categoriaRepository.GetAll().FirstOrDefault(c => c.Id == idCategoria);
 
@@ -55,7 +58,6 @@ namespace ToDo.Services
 
             var tarefaParaSalvar = new Tarefa
             {
-                Id = tarefa.Id,
                 DataDeCriacao = DateTime.Now,
                 DataDeEncerramento = tarefa.DataDeEncerramento,
                 DataDeVencimento = tarefa.DataDeVencimento,
@@ -114,9 +116,20 @@ namespace ToDo.Services
             return FormataTarefa(_tarefaRepository.GetById(id));
         }
 
-        public IEnumerable<TarefaResponseDC> Search()
+        public IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria)
         {
-            return _tarefaRepository.GetAll().Select(w => FormataTarefa(w)).ToList();
+            IQueryable<Tarefa> tarefas = _tarefaRepository.GetAll();
+
+            if (!String.IsNullOrEmpty(descricao))
+                tarefas = tarefas.Where(w => w.Descricao.Contains(descricao));
+
+            if (!status.IsNull())
+                tarefas = tarefas.Where(w => (int)w.Status == status);
+
+            if(!idCategoria.IsNull())
+                tarefas = tarefas.Where(w => w.Categorias.Any(w => w.Id == idCategoria));
+
+            return tarefas.Select(w => FormataTarefa(w)).ToList();
         }
     }
 }

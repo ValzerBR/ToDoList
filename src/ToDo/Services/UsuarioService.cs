@@ -41,7 +41,7 @@ namespace ToDo.Services
             };
         }
 
-        public UsuarioResponseDC Create(UsuarioDC usuario)
+        public UsuarioResponseDC Create(UsuarioNovoDC usuario)
         {
             var user = _usuarioRepository.Save(new Usuario
             {

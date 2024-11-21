@@ -16,7 +16,7 @@ namespace ToDo.Controllers
         }
 
         [HttpPost("/Create/")]
-        public IActionResult Create([FromBody] UsuarioDC usuario)
+        public IActionResult Create([FromBody] UsuarioNovoDC usuario)
         {
             return JsonOptionsUtil.Create(_usuarioContract.Create(usuario));
         }

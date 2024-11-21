@@ -37,13 +37,13 @@ namespace ToDo.Controllers
         }
         
         [HttpPost("/Categoria/Create")]
-        public IActionResult Create(CategoriaDC categoria)
+        public IActionResult Create(CategoriaNovaDC categoria)
         {
             var retorno = _categoriaContract.Create(categoria);
             return JsonOptionsUtil.Create(retorno);
         }
 
-        [HttpPost("/Categoria/Update")]
+        [HttpPut("/Categoria/Update")]
         public IActionResult Update(CategoriaDC categoria)
         {
             var retorno = _categoriaContract.Update(categoria);

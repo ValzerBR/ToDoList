@@ -18,7 +18,7 @@ namespace ToDo.Controllers
 
 
         [HttpPost("/Create/Tarefa/")]
-        public IActionResult Create([FromBody] TarefaDC tarefa)
+        public IActionResult Create([FromBody] TarefaNovaDC tarefa)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Create(tarefa));
         }
@@ -43,9 +43,9 @@ namespace ToDo.Controllers
         }
 
         [HttpGet("/Search/Tarefa/")]
-        public IActionResult Search()
+        public IActionResult Search(string? descricao, int? status, int? idCategoria)
         {
-            return JsonOptionsUtil.Create(_tarefaContract.Search().ToList());
+            return JsonOptionsUtil.Create(_tarefaContract.Search(descricao, status, idCategoria).ToList());
         }
     }
 }

@@ -9,11 +9,11 @@ namespace ToDo.Contracts
 {
     public interface ITarefa
     {
-        TarefaResponseDC Create(TarefaDC usuario);
+        TarefaResponseDC Create(TarefaNovaDC usuario);
         TarefaResponseDC Update(TarefaDC usuario);
         TarefaResponseDC Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<TarefaResponseDC> Search();
+        IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria);
     }
 
     [DataContract]
@@ -21,6 +21,25 @@ namespace ToDo.Contracts
     {
         [DataMember]
         public int Id { get; set; }
+        [DataMember]
+        public string Titulo { get; set; }
+        [DataMember]
+        public string Descricao { get; set; }
+        [DataMember]
+        public Status Status { get; set; }
+        [DataMember]
+        public DateTime? DataDeEncerramento { get; set; }
+        [DataMember]
+        public DateTime DataDeVencimento { get; set; }
+        [DataMember]
+        public int UsuarioId { get; set; }
+        [DataMember]
+        public ICollection<int>? CategoriasId { get; set; }
+    }
+
+    [DataContract]
+    public class TarefaNovaDC
+    {
         [DataMember]
         public string Titulo { get; set; }
         [DataMember]

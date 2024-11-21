@@ -5,7 +5,7 @@ namespace ToDo.Contracts
 {
     public interface IUsuario
     {
-        UsuarioResponseDC Create(UsuarioDC usuario);
+        UsuarioResponseDC Create(UsuarioNovoDC usuario);
         UsuarioResponseDC Update(UsuarioDC usuario);
         UsuarioResponseDC Detail(int id);
         void Delete(int[] ids);
@@ -17,6 +17,15 @@ namespace ToDo.Contracts
     {
         [DataMember]
         public int Id { get; set; }
+        [DataMember]
+        public string Nome { get; set; }
+        [DataMember]
+        public string Email { get; set; }
+    }
+
+    [DataContract]
+    public class UsuarioNovoDC
+    {
         [DataMember]
         public string Nome { get; set; }
         [DataMember]

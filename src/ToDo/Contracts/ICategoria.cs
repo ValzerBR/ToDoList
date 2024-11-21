@@ -8,7 +8,7 @@ namespace ToDo.Contracts
         CategoriaDC? Detail(int id);
         void Delete(int[] ids);
         void DeleteCategoriaFromTarefa(int tarefaId, int idCategoria);
-        CategoriaDC Create(CategoriaDC categoria);
+        CategoriaDC Create(CategoriaNovaDC categoria);
         CategoriaDC Update(CategoriaDC categoria);
     }
 
@@ -17,6 +17,13 @@ namespace ToDo.Contracts
     {
         [DataMember]
         public int Id { get; set; }
+        [DataMember]
+        public string Nome { get; set; }
+    }
+
+    [DataContract]
+    public class CategoriaNovaDC
+    {
         [DataMember]
         public string Nome { get; set; }
     }

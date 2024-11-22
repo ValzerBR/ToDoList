@@ -13,7 +13,7 @@ namespace ToDo.Contracts
         TarefaResponseDC Update(TarefaDC usuario);
         TarefaResponseDC Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria);
+        IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo);
     }
 
     [DataContract]

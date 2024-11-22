@@ -60,11 +60,12 @@ namespace ToDo.Services
 
         public IEnumerable<CategoriaDC> Search(string? nome)
         {
-            _categoriaRepository.GetAll();
-            if (!String.IsNullOrEmpty(nome))
-            {
+            IQueryable<Categoria> tarefas = _categoriaRepository.GetAll();
 
-            }
+            if (!String.IsNullOrEmpty(nome))
+                tarefas = tarefas.Where(w => w.Nome.Contains(nome));
+
+            return tarefas.Select(w => FormataCategoria(w)).ToList();
         }
 
         public CategoriaDC Create(CategoriaNovaDC categoria)

@@ -83,6 +83,10 @@ namespace ToDo.Services
             if (tarefaEntity.IsNull())
                 throw new Exception("Tarefa não encontrada");
 
+            if (_usuarioRepository.GetById(tarefa.UsuarioId).IsNull())
+                throw new BusinessException("Usuário inválido. Por favor crie e/ou insira um usuário válido.");
+
+
             tarefaEntity.DataDeEncerramento = tarefa.DataDeEncerramento;
             tarefaEntity.DataDeVencimento = tarefa.DataDeVencimento;
             tarefaEntity.Descricao = tarefa.Descricao;
@@ -120,7 +124,7 @@ namespace ToDo.Services
             return FormataTarefa(_tarefaRepository.GetById(id));
         }
 
-        public IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria)
+        public IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo)
         {
             IQueryable<Tarefa> tarefas = _tarefaRepository.GetAll();
 
@@ -132,6 +136,11 @@ namespace ToDo.Services
 
             if(!idCategoria.IsNull())
                 tarefas = tarefas.Where(w => w.Categorias.Any(w => w.Id == idCategoria));
+
+
+            if (!String.IsNullOrEmpty(titulo))
+                tarefas = tarefas.Where(w => w.Titulo.Contains(titulo));
+
 
             return tarefas.Select(w => FormataTarefa(w)).ToList();
         }

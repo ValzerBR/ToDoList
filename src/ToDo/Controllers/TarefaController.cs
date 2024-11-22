@@ -43,9 +43,9 @@ namespace ToDo.Controllers
         }
 
         [HttpGet("/Search/Tarefa/")]
-        public IActionResult Search(string? descricao, int? status, int? idCategoria)
+        public IActionResult Search(string? descricao, int? status, int? idCategoria, string? titulo)
         {
-            return JsonOptionsUtil.Create(_tarefaContract.Search(descricao, status, idCategoria).ToList());
+            return JsonOptionsUtil.Create(_tarefaContract.Search(descricao, status, idCategoria, titulo).ToList());
         }
     }
 }

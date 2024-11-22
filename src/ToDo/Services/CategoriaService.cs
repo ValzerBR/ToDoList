@@ -58,6 +58,15 @@ namespace ToDo.Services
             _categoriaRepository.Delete(categoria);
         }
 
+        public IEnumerable<CategoriaDC> Search(string? nome)
+        {
+            _categoriaRepository.GetAll();
+            if (!String.IsNullOrEmpty(nome))
+            {
+
+            }
+        }
+
         public CategoriaDC Create(CategoriaNovaDC categoria)
         {
             if (_categoriaRepository.GetAll().Any(w => w.Nome == categoria.Nome))

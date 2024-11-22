@@ -10,6 +10,7 @@ namespace ToDo.Contracts
         void DeleteCategoriaFromTarefa(int tarefaId, int idCategoria);
         CategoriaDC Create(CategoriaNovaDC categoria);
         CategoriaDC Update(CategoriaDC categoria);
+        IEnumerable<CategoriaDC> Search(string? nome);
     }
 
     [DataContract]

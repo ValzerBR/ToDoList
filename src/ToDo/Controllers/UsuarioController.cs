@@ -21,26 +21,26 @@ namespace ToDo.Controllers
             return JsonOptionsUtil.Create(_usuarioContract.Create(usuario));
         }
 
-        [HttpPut("/Update/")]
+        [HttpPut("Usuario/Update/")]
         public IActionResult Update(UsuarioDC usuario)
         {
             return JsonOptionsUtil.Create(_usuarioContract.Update(usuario));
         }
 
-        [HttpGet("/Detail/{id}")]
+        [HttpGet("Usuario/Detail/{id}")]
         public IActionResult Detail(int id)
         {
             return JsonOptionsUtil.Create(_usuarioContract.Detail(id));
         }
 
-        [HttpDelete("/Delete/")]
+        [HttpDelete("Usuario/Delete/")]
         public IActionResult Delete([FromQuery] int[] ids)
         {
             _usuarioContract.Delete(ids);
             return Json(null);
         }
 
-        [HttpGet("/Search/")]
+        [HttpGet("Usuario/Search/")]
         public IActionResult Search()
         {
             return JsonOptionsUtil.Create(_usuarioContract.Search());

@@ -5,9 +5,9 @@ using ToDo.Models;
 
 namespace ToDo.Context
 {
-    public class Context : DbContext
+    public class AppDbContext : Microsoft.EntityFrameworkCore.DbContext
     {
-        public Context (DbContextOptions<Context> options)
+        public AppDbContext (DbContextOptions<AppDbContext> options)
             : base(options) { }
 
         public DbSet<Categoria> Categorias => Set<Categoria>();

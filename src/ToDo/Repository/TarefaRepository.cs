@@ -8,8 +8,8 @@ namespace ToDo.Repository
 {
     public class TarefaRepository : Repository<Tarefa>
     {
-        private readonly Context.Context _context;
-        public TarefaRepository(Context.Context ctx) : base(ctx)
+        private readonly Context.AppDbContext _context;
+        public TarefaRepository(Context.AppDbContext ctx) : base(ctx)
         {
             _context = ctx;
         }

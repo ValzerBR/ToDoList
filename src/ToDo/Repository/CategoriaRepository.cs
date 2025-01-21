@@ -7,7 +7,7 @@ namespace ToDo.Repository
 {
     public class CategoriaRepository : Repository<Categoria>
     {
-        public CategoriaRepository(Context.Context ctx) : base(ctx)
+        public CategoriaRepository(Context.AppDbContext ctx) : base(ctx)
         {
         }
     }

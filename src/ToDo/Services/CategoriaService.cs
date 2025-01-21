@@ -9,8 +9,8 @@ namespace ToDo.Services
     public class CategoriaService : ICategoria
     {
         private readonly CategoriaRepository _categoriaRepository;
-        private readonly Context.Context _context;
-        public CategoriaService(CategoriaRepository categoriaRepository, Context.Context ctx)
+        private readonly Context.AppDbContext _context;
+        public CategoriaService(CategoriaRepository categoriaRepository, Context.AppDbContext ctx)
         {
             _categoriaRepository = categoriaRepository;
             _context = ctx;

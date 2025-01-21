@@ -7,7 +7,7 @@ namespace ToDo.Repository
 {
     public class UsuarioRepository : Repository<Usuario>
     {
-        public UsuarioRepository(Context.Context ctx) : base(ctx)
+        public UsuarioRepository(Context.AppDbContext ctx) : base(ctx)
         {
         }
     }

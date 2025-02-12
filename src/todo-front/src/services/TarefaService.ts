@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Tarefa } from "../models/Tarefa";
 
-const url = "http://localhost:8080/Tarefa/"
+const url = "https://todo-todolist-app3-latest.onrender.com/Tarefa/"
 
 export const TarefaService = {
     async cadastrar(tarefa: Tarefa) {

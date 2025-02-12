@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Usuario } from "../models/Usuario";
 
-const url = "http://localhost:8080/Usuario/"
+const url = "https://todo-todolist-app3-latest.onrender.com/Usuario/"
 
 export const UsuarioService = {
     async cadastrar(usuario: Usuario) {

@@ -41,5 +41,15 @@ export const TarefaController = {
           console.error("Erro ao deletar a tarefa.:", error);
           throw error;
         }
+    }, 
+
+    async search(titulo: string, usuarioId: number) {
+        try {
+          const response = await TarefaService.search(titulo, usuarioId);
+          return response;
+        } catch (error) {
+          console.error("Erro ao deletar a tarefa.:", error);
+          throw error;
+        }
     }
 }

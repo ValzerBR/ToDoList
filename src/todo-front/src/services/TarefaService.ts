@@ -56,5 +56,18 @@ export const TarefaService = {
                 throw new Error("Ocorreu um erro inesperado.");
             }
         }
+    },
+
+    async search(titulo: string, usuarioId: number){
+        try {
+            const response = await axios.get(`${url}Search?titulo=${titulo}&usuarioId=${usuarioId}`);
+            return response.data;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                throw new Error("Ocorreu um erro ao deletar a tarefa.");
+            } else {
+                throw new Error("Ocorreu um erro inesperado.");
+            }
+        }
     }
 }

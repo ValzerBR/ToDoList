@@ -54,13 +54,18 @@ const TarefaView = () => {
     })
   };
 
-  
-
   const startContent = (
     <React.Fragment>
       <Button label='Criar tarefa' icon="pi pi-plus" className="mr-2" onClick={() => { setVisible(true); setIdTarefa(null); }} />
     </React.Fragment>
   );
+
+  const search = () => {
+    TarefaController.search(searchTerm, usuario.id)
+    .then((response) => {
+      setTarefas(response);
+    })
+  }
 
   const centerContent = (
     <IconField iconPosition="left">
@@ -68,7 +73,7 @@ const TarefaView = () => {
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <Button icon="pi pi-filter" className="p-button p-button-outlined p-button-info" />
+      <Button icon="pi pi-search" onClick={search} className="p-button p-button-outlined p-button-info" />
     </IconField>
   );
 

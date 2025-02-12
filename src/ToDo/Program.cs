@@ -35,11 +35,11 @@ namespace ToDo
             var user = Environment.GetEnvironmentVariable("DB_USER");
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            var connectionString = $"Server={server};Database={database};User Id={user};Password={password};TrustServerCertificate=True;";
+            var connectionString = $"Host={server};Port=20432;Database={database};Username={user};Password={password};SSL Mode=Require;";
 
 
             builder.Services.AddDbContext<Context.AppDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseNpgsql(connectionString, npgsqlOptions => npgsqlOptions.CommandTimeout(180)));  // Timeout de 180 segundos
 
             // Configuração de CORS
             builder.Services.AddCors(options =>
@@ -54,6 +54,7 @@ namespace ToDo
             });
 
             var app = builder.Build();
+            AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
             app.UseSwagger();
             app.UseSwaggerUI();

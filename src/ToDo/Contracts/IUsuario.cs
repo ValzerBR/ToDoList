@@ -10,6 +10,8 @@ namespace ToDo.Contracts
         UsuarioResponseDC Detail(int id);
         void Delete(int[] ids);
         IEnumerable<UsuarioResponseDC> Search();
+
+        UsuarioResponseDC GetByEmail(string email);
     }
 
     [DataContract]

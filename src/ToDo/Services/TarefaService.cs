@@ -33,7 +33,7 @@ namespace ToDo.Services
                 DataDeCriacao = obj.DataDeCriacao.ToDateBR(),
                 Descricao = obj.Descricao,
                 Titulo = obj.Titulo,
-                StatusFormatado = obj.Status.GetEnumName(),
+                Status = obj.Status,
                 UsuarioId = obj.UsuarioId,
                 Categorias = obj.Categorias.Select(w => new CategoriaDC
                 {
@@ -124,9 +124,12 @@ namespace ToDo.Services
             return FormataTarefa(_tarefaRepository.GetById(id));
         }
 
-        public IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo)
+        public IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo, int usuarioId)
         {
-            IQueryable<Tarefa> tarefas = _tarefaRepository.GetAll();
+            IQueryable<Tarefa> tarefas = _tarefaRepository.GetAll().Where(w => w.UsuarioId == usuarioId);
+
+            if(!String.IsNullOrEmpty(titulo))
+                tarefas = tarefas.Where(w => w.Titulo.Contains(titulo));
 
             if (!String.IsNullOrEmpty(descricao))
                 tarefas = tarefas.Where(w => w.Descricao.Contains(descricao));
@@ -141,8 +144,8 @@ namespace ToDo.Services
             if (!String.IsNullOrEmpty(titulo))
                 tarefas = tarefas.Where(w => w.Titulo.Contains(titulo));
 
-
-            return tarefas.Select(w => FormataTarefa(w)).ToList();
+            var tt = tarefas.ToList().Select(w => FormataTarefa(w));
+            return tt;
         }
     }
 }

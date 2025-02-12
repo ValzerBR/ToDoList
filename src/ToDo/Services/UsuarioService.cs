@@ -25,12 +25,13 @@ namespace ToDo.Services
                 Email = obj.Email,
                 Tarefas = !obj.Tarefas.IsNull() ? obj.Tarefas.Select(t => new TarefaResponseDC
                 {
+                    Id = t.Id,
                     DataDeEncerramento = t.DataDeEncerramento.ToDateBR(),
                     DataDeVencimento = t.DataDeVencimento.ToDateBR(),
                     DataDeCriacao = t.DataDeCriacao.ToDateBR(),
                     Descricao = t.Descricao,
                     Titulo = t.Titulo,
-                    StatusFormatado = t.Status.GetEnumName(),
+                    Status = t.Status,
                     UsuarioId = t.UsuarioId,
                     Categorias = t.Categorias.Select(w => new CategoriaDC
                     {
@@ -87,6 +88,13 @@ namespace ToDo.Services
         public IEnumerable<UsuarioResponseDC> Search()
         {
             return _usuarioRepository.GetAll().Select(u => FormataUsuario(u)).ToList();
+        }
+
+        public UsuarioResponseDC GetByEmail(string email)
+        {
+            Usuario usuario = _usuarioRepository.GetAll().Where(w => w.Email == email).FirstOrDefault();
+            var response = FormataUsuario(usuario);
+            return response;
         }
     }
 }

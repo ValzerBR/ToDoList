@@ -9,6 +9,11 @@ namespace ToDo.Util
             return source == null;
         }
 
+        public static bool IsEmpty(this object source)
+        {
+            return source == "";
+        }
+
         //sobrecarga
         public static string ToDateBR(this DateTime? data)
         {

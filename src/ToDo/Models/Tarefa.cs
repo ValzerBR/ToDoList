@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components.Web.Virtualization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -15,9 +17,12 @@ namespace ToDo.Models
         [Required]
         public virtual Status Status { get; set; }
         [Required]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public virtual DateTime DataDeCriacao { get; set; }
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public virtual DateTime? DataDeEncerramento { get; set; }
         [Required]
+        [JsonConverter(typeof(IsoDateTimeConverter))]
         public virtual DateTime DataDeVencimento { get; set; }
         [Required]
         public virtual int UsuarioId { get; set; }

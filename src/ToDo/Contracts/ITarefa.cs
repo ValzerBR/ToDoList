@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using ToDo.Models;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace ToDo.Contracts
 {
@@ -13,7 +14,7 @@ namespace ToDo.Contracts
         TarefaResponseDC Update(TarefaDC usuario);
         TarefaResponseDC Detail(int id);
         void Delete(int[] ids);
-        IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo);
+        IEnumerable<TarefaResponseDC> Search(string? descricao, int? status, int? idCategoria, string? titulo, int usuarioId);
     }
 
     [DataContract]
@@ -28,8 +29,10 @@ namespace ToDo.Contracts
         [DataMember]
         public Status Status { get; set; }
         [DataMember]
+        [Newtonsoft.Json.JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime? DataDeEncerramento { get; set; }
         [DataMember]
+        [Newtonsoft.Json.JsonConverter(typeof(IsoDateTimeConverter))]
         public DateTime DataDeVencimento { get; set; }
         [DataMember]
         public int UsuarioId { get; set; }
@@ -73,7 +76,7 @@ namespace ToDo.Contracts
         [DataMember]
         public ICollection<CategoriaDC>? Categorias { get; set; }
         [DataMember]
-        public string StatusFormatado { get; set; }
+        public Status Status { get; set; }
         [DataMember]
         public string DataDeCriacao { get; set; }
 

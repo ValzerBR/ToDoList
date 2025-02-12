@@ -17,35 +17,35 @@ namespace ToDo.Controllers
         }
 
 
-        [HttpPost("/Create/Tarefa/")]
+        [HttpPost("Create/")]
         public IActionResult Create([FromBody] TarefaNovaDC tarefa)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Create(tarefa));
         }
 
-        [HttpPut("/Update/Tarefa/")]
+        [HttpPut("Update/")]
         public IActionResult Update(TarefaDC tarefa)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Update(tarefa));
         }
 
-        [HttpGet("/Detail/Tarefa/{id}")]
+        [HttpGet("Detail/{id}")]
         public IActionResult Detail(int id)
         {
             return JsonOptionsUtil.Create(_tarefaContract.Detail(id));
         }
 
-        [HttpDelete("/Delete/Tarefa/")]
+        [HttpDelete("Delete/")]
         public IActionResult Delete([FromQuery] int[] ids)
         {
             _tarefaContract.Delete(ids);
             return Json(null);
         }
 
-        [HttpGet("/Search/Tarefa/")]
-        public IActionResult Search(string? descricao, int? status, int? idCategoria, string? titulo)
+        [HttpGet("Search/")]
+        public IActionResult Search(string? descricao, int? status, int? idCategoria, string? titulo, int usuarioId)
         {
-            return JsonOptionsUtil.Create(_tarefaContract.Search(descricao, status, idCategoria, titulo).ToList());
+            return JsonOptionsUtil.Create(_tarefaContract.Search(descricao, status, idCategoria, titulo, usuarioId).ToList());
         }
     }
 }

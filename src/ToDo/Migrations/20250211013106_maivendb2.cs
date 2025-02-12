@@ -5,7 +5,7 @@
 namespace ToDo.Migrations
 {
     /// <inheritdoc />
-    public partial class GlobalInvariant : Migration
+    public partial class maivendb2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

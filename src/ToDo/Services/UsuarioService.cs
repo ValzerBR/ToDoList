@@ -23,6 +23,7 @@ namespace ToDo.Services
                 Id = obj.Id,
                 Nome = obj.Nome,
                 Email = obj.Email,
+                Senha = obj.Senha,
                 Tarefas = !obj.Tarefas.IsNull() ? obj.Tarefas.Select(t => new TarefaResponseDC
                 {
                     Id = t.Id,
@@ -48,7 +49,8 @@ namespace ToDo.Services
             var user = _usuarioRepository.Save(new Usuario
             {
                 Nome = usuario.Nome,
-                Email = usuario.Email
+                Email = usuario.Email,
+                Senha = usuario.Senha
             });
 
             return FormataUsuario(user);
@@ -64,6 +66,7 @@ namespace ToDo.Services
 
             usuarioExistente.Nome = usuario.Nome;
             usuarioExistente.Email = usuario.Email;
+            usuarioExistente.Senha = usuario.Senha;
 
             var user = _usuarioRepository.Save(usuarioExistente);
             return FormataUsuario(user);

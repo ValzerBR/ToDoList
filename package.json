@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@types/react": "^19.0.8",
+    "@types/react-router-dom": "^5.3.3",
+    "axios": "^1.7.9",
+    "primereact": "^10.9.2",
+    "react": "^19.0.0",
+    "react-router-dom": "^7.1.5",
+    "web-vitals": "^4.2.4"
+  }
+}

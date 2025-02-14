@@ -9,6 +9,7 @@ import { useAuth } from '../context/auth';
 const CadastroView = () => {
   const [email, setEmail] = useState('');
   const [nome, setNome] = useState('');
+  const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const {usuario, isLogged} = useAuth();
@@ -18,10 +19,10 @@ const CadastroView = () => {
           setError("Não foi possível cadastrar o usuário.");
         }
         else{
-          const usuario = new Usuario(nome, email);
+          const usuario = new Usuario(nome, email,senha);
           var usuarioReq = await UsuarioService.cadastrar(usuario)
           .then((response) => {
-            const user = new Usuario(response.Nome, response.Email, response.Id);
+            const user = new Usuario(response.Nome, response.Email, response.Id, response.Senha);
             isLogged(user);
             navigate('/tarefa');
           })
@@ -37,6 +38,8 @@ const CadastroView = () => {
         setEmail={setEmail}
         nome={nome}
         setNome={setNome}
+        senha = {senha}
+        setSenha ={setSenha}
         handleCadastrar={handleCadastro}
         error={error} 
       />

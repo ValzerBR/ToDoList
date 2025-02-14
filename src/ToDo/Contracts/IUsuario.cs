@@ -23,6 +23,8 @@ namespace ToDo.Contracts
         public string Nome { get; set; }
         [DataMember]
         public string Email { get; set; }
+
+        public string Senha { get; set; }
     }
 
     [DataContract]
@@ -32,6 +34,8 @@ namespace ToDo.Contracts
         public string Nome { get; set; }
         [DataMember]
         public string Email { get; set; }
+
+        public string Senha { get; set; }
     }
 
     [DataContract]
@@ -44,6 +48,10 @@ namespace ToDo.Contracts
 
         [DataMember]
         public string Email { get; set; }
+
+        [DataMember]
+
+        public string Senha { get; set; }
 
         [DataMember]
         public ICollection<TarefaResponseDC>? Tarefas { get; set; }

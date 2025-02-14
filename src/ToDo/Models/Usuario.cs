@@ -12,6 +12,9 @@ namespace ToDo.Models
         [Required]
         public virtual string Email { get; set; }
 
+        [Required]
+        public virtual string Senha { get; set; }
+
         public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

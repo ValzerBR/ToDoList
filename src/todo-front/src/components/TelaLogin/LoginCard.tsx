@@ -5,13 +5,15 @@ import { Divider } from 'primereact/divider';
 
 interface LoginCardProps {
   email: string;
+  senha: string;
   setEmail: (value: string) => void;
+  setSenha: (value: string) => void;
   handleLogin: () => void;
   handleCadastro: () => void;
   error?: string;
 }
 
-const LoginCard = ({ email, setEmail, handleLogin, handleCadastro, error }: LoginCardProps) => {
+const LoginCard = ({ email, senha, setEmail, setSenha, handleLogin, handleCadastro, error }: LoginCardProps) => {
   return (
     <div className="flex align-items-center justify-content-center min-h-screen">
       <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
@@ -20,6 +22,7 @@ const LoginCard = ({ email, setEmail, handleLogin, handleCadastro, error }: Logi
             <div className="flex flex-column gap-2">
               <InputField label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu e-mail" />
               {error && <p className="text-red-500 text-sm">{error}</p>}
+              <InputField label="Senha" value={senha} onChange={setSenha} placeholder="Digite sua senha" />
               <Button label="Entrar" icon="pi pi-user" className="w-full mt-2" onClick={handleLogin} />
             </div>
           </div>

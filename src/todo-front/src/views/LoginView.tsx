@@ -7,6 +7,7 @@ import { useAuth } from '../context/auth';
 
 const LoginView = () => {
   const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { isLogged, usuario } = useAuth();
@@ -17,10 +18,10 @@ const LoginView = () => {
       return;
     }
     setError("");
-    var request = UsuarioController.login(email)
+    var request = UsuarioController.login(email, senha)
       .then((response: any) => {
         if(response){
-          const user = new Usuario(response.Nome, response.Email, response.Id);
+          const user = new Usuario(response.Nome, response.Email, response.Senha, response.Id);
           isLogged(user);
           navigate('/tarefa')
         }else{
@@ -38,7 +39,9 @@ const LoginView = () => {
   return (
       <LoginCard 
         email={email} 
+        senha={senha}
         setEmail={setEmail} 
+        setSenha={setSenha}
         handleLogin={handleLogin} 
         handleCadastro={handleCadastro} 
         error={error} 

@@ -6,13 +6,15 @@ import { Button } from "primereact/button";
 interface CadastroCardProps {
     nome: string,
     email: string,
+    senha :string,
     setEmail: (value: string) => void,
     setNome: (value: string) => void,
+    setSenha: (value: string) => void,
     handleCadastrar: () => void,
     error?: string
 };
 
-const CadastroCard = ({nome, email, setEmail, setNome, handleCadastrar, error}: CadastroCardProps) => {
+const CadastroCard = ({nome, email, setEmail, setNome,setSenha, handleCadastrar, error, senha}: CadastroCardProps) => {
     return (
         <div className="flex align-items-center justify-content-center min-h-screen">
           <div className="surface-card p-4 shadow-2 border-round w-full lg:w-6">
@@ -21,6 +23,7 @@ const CadastroCard = ({nome, email, setEmail, setNome, handleCadastrar, error}: 
                 <div className="flex flex-column gap-2">
                 <InputField label="Nome" value={nome} onChange={setNome}  placeholder="Digite seu nome"/>
                 <InputField label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu e-mail" />
+                <InputField label="Senha" value={senha} type="password" onChange={setSenha} placeholder="Digite seu senha" />
                 {error && <p className="text-red-500 text-sm">{error}</p>}
                 <Button label="Cadastrar" icon="pi pi-sign-in" className="w-full" onClick={handleCadastrar} />
                 </div>

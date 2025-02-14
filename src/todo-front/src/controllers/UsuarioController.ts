@@ -13,13 +13,14 @@ export const UsuarioController = {
       }
     },
 
-    async login(email: any){
+    async login(email: any, senha: any){
         try {
-            const response = await UsuarioService.login(email);
+            const response = await UsuarioService.login(email, senha);
             return response;
         } catch(error){
         }
     },
+    
 
     async detail(id: number){
       try {

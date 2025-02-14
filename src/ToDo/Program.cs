@@ -35,7 +35,7 @@ namespace ToDo
             var user = Environment.GetEnvironmentVariable("DB_USER");
             var password = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
-            var connectionString = $"Host={server};Port=20432;Database={database};Username={user};Password={password};SSL Mode=Require;";
+            var connectionString = $"Host={server};Port=22068;Database={database};Username={user};Password={password};SSL Mode=Require;";
 
 
             builder.Services.AddDbContext<Context.AppDbContext>(options =>

@@ -74,6 +74,7 @@ const TarefaView = () => {
       onChange={(e) => setSearchTerm(e.target.value)}
       />
       <Button icon="pi pi-search" onClick={search} className="p-button p-button-outlined p-button-info" />
+      <Button icon="pi pi-filter" onClick={search} className="p-button p-button-outlined p-button-info" />
     </IconField>
   );
 

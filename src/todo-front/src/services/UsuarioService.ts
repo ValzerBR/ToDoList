@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Usuario } from "../models/Usuario";
 
-const url = "https://todo-todolist-app3-latest.onrender.com/Usuario/"
+const url = "http://localhost:8080/Usuario/"
 
 export const UsuarioService = {
     async cadastrar(usuario: Usuario) {
@@ -19,10 +19,15 @@ export const UsuarioService = {
         }
     },
 
-    async login(email: string) {
+    async login(email: string, senha: string) {
         try {
             const response = await axios.get(`${url}GetByEmail?email=${email}`);
-            return response.data;
+            const user = response.data;
+            if (user && user.Senha === senha) {
+                return user;
+            } else {
+                throw new Error("Email ou senha incorretos.");
+            }
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 throw new Error("Ocorreu um erro ao buscar o usuário.");

@@ -12,8 +12,8 @@ using ToDo.Context;
 namespace ToDo.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250211013106_maivendb2")]
-    partial class maivendb2
+    [Migration("20250213235904_testeeee223123324243wew")]
+    partial class testeeee223123324243wew
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -111,6 +111,10 @@ namespace ToDo.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("text");
 

@@ -111,6 +111,10 @@ namespace ToDo.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Usuarios");

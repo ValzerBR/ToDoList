@@ -22,7 +22,7 @@ const LoginCard = ({ email, senha, setEmail, setSenha, handleLogin, handleCadast
             <div className="flex flex-column gap-2">
               <InputField label="E-mail" value={email} onChange={setEmail} placeholder="Digite seu e-mail" />
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <InputField label="Senha" value={senha} onChange={setSenha} placeholder="Digite sua senha" />
+              <InputField label="Senha" type= "password" value={senha} onChange={setSenha} placeholder="Digite sua senha" />
               <Button label="Entrar" icon="pi pi-user" className="w-full mt-2" onClick={handleLogin} />
             </div>
           </div>

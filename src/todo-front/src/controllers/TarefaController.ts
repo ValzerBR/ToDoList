@@ -1,5 +1,6 @@
 import { Tarefa } from "../models/Tarefa";
 import { TarefaService } from "../services/TarefaService";
+import axios from 'axios';
 
 
 export const TarefaController = {
@@ -51,5 +52,22 @@ export const TarefaController = {
           console.error("Erro ao deletar a tarefa.:", error);
           throw error;
         }
-    }
+    },
+    
+    filter(filters: { status?: number[]; dataInicial?: Date; dataFinal?: Date }, usuarioId: number): Promise<Tarefa[]> {
+      const payload = {
+        usuarioId,
+        status: filters.status,
+        dataInicial: filters.dataInicial ? filters.dataInicial.toISOString() : null,
+        dataFinal: filters.dataFinal ? filters.dataFinal.toISOString() : null,
+      };
+  
+      return axios
+        .post('/api/tarefas/filter', payload)
+        .then(response => response.data)
+        .catch(error => {
+          console.error('Erro ao filtrar tarefas:', error);
+          throw error;
+        });
+    },
 }
